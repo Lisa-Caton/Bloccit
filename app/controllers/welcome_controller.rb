@@ -5,6 +5,6 @@ class WelcomeController < ApplicationController
   def about
   end
 
-  def contact_page
+  def contact
   end
 end

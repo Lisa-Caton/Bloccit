@@ -16,10 +16,9 @@ posts = Post.all
 end
 
 puts"#{Post.count}"
-Post.find_or_create_by!(title: 'Crabtree', body:'Crabtree Eveyln')
+unique_post = Post.find_or_create_by!(title: 'Crabtree', body:'Crabtree Eveyln')
+Comment.find_or_create_by!(post: unique_post, body:'Summer time scents!')
 puts"#{Post.count}"
-
-Comment.find_or_create_by!(post_id: 101, body:'Summer time scents!')
 
 puts"Seed finished"
 puts"#{Post.count} posts created"

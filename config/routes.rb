@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
-  # get 'posts/index'
-  # get 'posts/show'
-  # get 'posts/new'
-  # get 'posts/edit'
-  # can replace all of these generated routes with a more succinct syntax with
-  # resources :posts
+
   # we call the resources method and pass it a Symbol
   resources :posts
+  resources :advertisements
 
   # get 'welcome/index'
   # get 'welcome/about'

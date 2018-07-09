@@ -4,11 +4,27 @@ class AdvertisementsController < ApplicationController
   end
 
   def show
+    @advertisement = Advertisement.find(params[:id])
   end
 
   def new
+    @advertisement = Advertisement.new
   end
 
   def create
+    #this action will very much look like the post controller
+    @advertisement = Advertisement.new
+    @advertisement.title = params[:advertisement][:title]
+    @advertisement.copy = params[:advertisement][:copy]
+    @advertisement.price = params[:advertisement][:price]
+
+    if @advertisement.save
+      flash[:notice] = "Advertisement was saved."
+      redirect_to @advertisement
+    else
+      flash[:error] = "There was an error saving the advertisement. Please try again."
+      render :new
+    end
+
   end
 end

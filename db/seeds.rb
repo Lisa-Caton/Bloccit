@@ -1,5 +1,6 @@
 require 'random_data'
 
+# Create Posts
 50.times do
   Post.create!(
     title: RandomData.random_sentence,
@@ -8,6 +9,7 @@ require 'random_data'
 end
 posts = Post.all
 
+# Create Comments
 100.times do
   Comment.create!(
     post: posts.sample,
@@ -15,11 +17,21 @@ posts = Post.all
   )
 end
 
-puts"#{Post.count}"
-unique_post = Post.find_or_create_by!(title: 'Crabtree', body:'Crabtree Eveyln')
-Comment.find_or_create_by!(post: unique_post, body:'Summer time scents!')
-puts"#{Post.count}"
+# puts"#{Post.count}"
+# unique_post = Post.find_or_create_by!(title: 'Crabtree', body:'Crabtree Eveyln')
+# Comment.find_or_create_by!(post: unique_post, body:'Summer time scents!')
+# puts"#{Post.count}"
+
+# Create Questions
+100.times do
+  Question.create!(
+    title: RandomData.random_sentence,
+    body: RandomData.random_paragraph,
+    resolved: false
+  )
+end
 
 puts"Seed finished"
 puts"#{Post.count} posts created"
 puts"#{Comment.count} comments created"
+puts"#{Question.count} questions created"

@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   
   # we call the resources method and pass it a Symbol
-  resources :posts
+  resources :topics do 
+    resources :posts, except: [:index]
+   end
+
   resources :advertisements
   resources :questions
 

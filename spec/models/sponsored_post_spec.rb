@@ -1,13 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe SponsoredPost, type: :model do
- #  let(:title) { RandomData.random_sentence }
- #  let(:body) { RandomData.random_paragraph }
- # let(:topic) { Topic.create!(name: name, description: description) }
- # let(:sponsored_posts) { topic.sponsored_posts.create!(title: title, body: body, price: number_field) }
- #  it { is_expected.to belong_to(:topic) }
+  let(:title) { RandomData.random_sentence }
+  let(:body) { RandomData.random_paragraph }
 
- let (:sponsored_posts) { SponsoredPost.create! }
+  let(:sponsored_posts) { sponsored_posts.create!(title: title, body: body, price: number_field) }
 
   describe "attributes" do
     it "should respond to title" do

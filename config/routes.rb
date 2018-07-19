@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # we call the resources method and pass it a Symbol
   resources :topics do 
     resources :posts, except: [:index]
-    resources :sponsored_posts
+    resources :sponsored_posts, except: [:index]
    end
 
   resources :advertisements

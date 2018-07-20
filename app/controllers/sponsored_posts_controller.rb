@@ -16,9 +16,9 @@ class SponsoredPostsController < ApplicationController
 
   def create
     @sponsored_posts = SponsoredPost.new
-    @sponsored_posts.title = params[:sponsored_posts][:title]
-    @sponsored_posts.body = params[:sponsored_posts][:body]
-    @sponsored_posts.price = params[:sponsored_posts][:price]
+    @sponsored_posts.title = params[:sponsored_post][:title]
+    @sponsored_posts.body = params[:sponsored_post][:body]
+    @sponsored_posts.price = params[:sponsored_post][:price]
     @topic = Topic.find(params[:topic_id])
     @sponsored_posts.topic = @topic
     # we assign a topic to a sponsored_posts
@@ -32,6 +32,7 @@ class SponsoredPostsController < ApplicationController
       flash.now[:alert] = "There was an error saving the sponsored post. Please try again."
       render :new
     end
+    puts params
   end
 
   def update

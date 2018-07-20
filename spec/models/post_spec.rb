@@ -5,14 +5,23 @@ RSpec.describe Post, type: :model do
   let(:description) { RandomData.random_paragraph }
   let(:title) { RandomData.random_sentence }
   let(:body) { RandomData.random_paragraph }
-  
-  # we create a parent topic for 'post'
+
+
   let(:topic) { Topic.create!(name: name, description: description) }
-  
-  # associate 'post' with 'topic' via 'topic.posts.create!'
+    # we create a parent topic for 'post'
+
   let(:post) { topic.posts.create!(title: title, body: body) }
+  # associate 'post' with 'topic' via 'topic.posts.create!'
+
 
   it { is_expected.to belong_to(:topic) }
+
+  it { is_expected.to validate_presence_of(:title) }
+  it { is_expected.to validate_presence_of(:body) }
+  it { is_expected.to validate_presence_of(:topic) }
+
+  it { is_expected.to validate_length_of(:title).is_at_least(5) }
+  it { is_expected.to validate_length_of(:body).is_at_least(20) }
 
   describe "attributes" do
     it "has title and body attributes" do

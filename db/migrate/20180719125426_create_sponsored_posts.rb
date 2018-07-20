@@ -4,8 +4,10 @@ class CreateSponsoredPosts < ActiveRecord::Migration[5.2]
       t.string :title
       t.text :body
       t.integer :price
+      t.references :topic, index: true
 
       t.timestamps
     end
+    add_foreign_key :sponsored_posts, :topics
   end
 end

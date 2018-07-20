@@ -1,10 +1,10 @@
 require 'rails_helper'
+require 'random_data'
 
 RSpec.describe PostsController, type: :controller do
 
   let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
   # Because posts will be nested under topics, at #12 we create a parent topic named 'my_topic'.
-
 
    let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
    # we update how we create 'my_post' so that it will belong to 'my_topic'.

@@ -5,7 +5,8 @@ require 'random_data'
    SponsoredPost.create!(
      topic: topics.sample,
      title: RandomData.random_sentence,
-     body: RandomData.random_paragraph
+     body: RandomData.random_paragraph,
+     price: rand(10...50)
    )
  end
  sponsored_posts = Post.all

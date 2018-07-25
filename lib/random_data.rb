@@ -29,4 +29,15 @@ module RandomData
     letters[0,rand(3..8)].join
     #We join the zeroth through nth item in letters. The nth item is the result of rand(3..8) which returns a random number greater than or equal to three and less than or equal to eight.
   end
+
+  module RandomData
+   def self.random_name
+     first_name = random_word.capitalize
+     last_name = random_word.capitalize
+     "#{first_name} #{last_name}"
+   end
+ 
+   def self.random_email
+     "#{random_word}@#{random_word}.#{random_word}"
+   end
 end

@@ -3,11 +3,15 @@ require 'random_data'
 
 RSpec.describe PostsController, type: :controller do
 
+  let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
+  # Add a user for my_post to belong to
+
   let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
   # Because posts will be nested under topics, at #12 we create a parent topic named 'my_topic'.
 
-   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
-   # we update how we create 'my_post' so that it will belong to 'my_topic'.
+  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+  # we update how we create 'my_post' so that it will belong to 'my_topic'.
+  # now updated to have a post and user association
 
 
   describe "GET new" do

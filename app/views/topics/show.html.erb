@@ -17,7 +17,7 @@
              <!--/ we refactor how we link to individual posts using the 'topic_post_path method'. This helper takes a topic and a post and generates a path to the posts show view. -->
            </h4>
            <small>
-             submitted <%= time_ago_in_words(post.created_at) %> ago <br>
+             submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
              <%= post.comments.count %> Comments
            </small>
            <!--/ we add submission and comment details for each post in the show view. -->

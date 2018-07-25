@@ -10,22 +10,11 @@ require 'random_data'
  end
  users = User.all
 
-# Create SponsoredPost
-10.times do
-   SponsoredPost.create!(
-     topic: topics.sample,
-     title: RandomData.random_sentence,
-     body: RandomData.random_paragraph,
-     price: rand(10...50)
-   )
- end
- sponsored_posts = Post.all
-
  # Create Topics
  15.times do
    Topic.create!(
-     name:         RandomData.random_sentence,
-     description:  RandomData.random_paragraph
+     name:        RandomData.random_sentence,
+     description: RandomData.random_paragraph
    )
  end
  topics = Topic.all
@@ -33,13 +22,24 @@ require 'random_data'
 # Create Posts
 50.times do
   Post.create!(
-    user:   users.sample,
+    user:  users.sample,
     topic: topics.sample,
     title: RandomData.random_sentence,
-    body: RandomData.random_paragraph
+    body:  RandomData.random_paragraph
   )
 end
 posts = Post.all
+
+# Create SponsoredPost
+10.times do
+   SponsoredPost.create!(
+     topic: topics.sample,
+     title: RandomData.random_sentence,
+     body:  RandomData.random_paragraph,
+     price: rand(10...50)
+   )
+ end
+ sponsored_posts = Post.all
 
 # Create Comments
 100.times do
@@ -49,16 +49,11 @@ posts = Post.all
   )
 end
 
-# puts"#{Post.count}"
-# unique_post = Post.find_or_create_by!(title: 'Crabtree', body:'Crabtree Eveyln')
-# Comment.find_or_create_by!(post: unique_post, body:'Summer time scents!')
-# puts"#{Post.count}"
-
 # Create Questions
 100.times do
   Question.create!(
     title: RandomData.random_sentence,
-    body: RandomData.random_paragraph,
+    body:  RandomData.random_paragraph,
     resolved: false
   )
 end

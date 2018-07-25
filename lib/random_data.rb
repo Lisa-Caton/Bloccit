@@ -19,7 +19,7 @@ module RandomData
 
     sentence = strings.join(" ")
     sentence.capitalize << "."
-    #After we generate a sentence, we call  capitalize on it and append a period.
+    #After we generate a sentence, we call capitalize on it and append a period.
   end
 
   def self.random_word
@@ -30,7 +30,6 @@ module RandomData
     #We join the zeroth through nth item in letters. The nth item is the result of rand(3..8) which returns a random number greater than or equal to three and less than or equal to eight.
   end
 
-  module RandomData
    def self.random_name
      first_name = random_word.capitalize
      last_name = random_word.capitalize

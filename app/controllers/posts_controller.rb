@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :require_sign_in, except: :show
 
   def new
     @topic = Topic.find(params[:topic_id])
@@ -6,12 +7,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
     @topic = Topic.find(params[:topic_id])
-    @post.topic = @topic
-    # we assign a topic to a post
+    @post = @topic.posts.build(post_params)
+    @post.user = current_user
+    #properly scope the new post
 
     if @post.save
       flash[:notice] = "Post was saved."
@@ -34,8 +33,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
+    @post.assign_attributes(post_params)
 
     if @post.save
       flash[:notice] = "Post was updated."
@@ -61,6 +59,12 @@ class PostsController < ApplicationController
     end
   end
 
-end
+  # remember to add private methods to the bottom of the file. Any method defined below private, will be private.
+   private
+   def post_params
+     params.require(:post).permit(:title, :body)
+   end
+ end
+
 
 

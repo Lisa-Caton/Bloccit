@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :require_sign_in, except: :show
+  before_action :authorize_user, except: [:show, :new, :create]
 
   def new
     @topic = Topic.find(params[:topic_id])
@@ -63,6 +64,16 @@ class PostsController < ApplicationController
    private
    def post_params
      params.require(:post).permit(:title, :body)
+   end
+
+   def authorize_user
+     post = Post.find(params[:id])
+
+     # we redirect the user unless they own the post they're attempting to modify, or they're an admin
+     unless current_user == post.user || current_user.admin?
+       flash[:alert] = "You must be an admin to do that."
+       redirect_to [post.topic, post]
+     end
    end
  end
 

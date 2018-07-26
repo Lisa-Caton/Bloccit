@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   before_save { self.email = email.downcase if email.present? }
   before_save :format_name
+  before_save { self.role ||= :member }
 
   # Could also have done this (below) instead of 'format_name'
   # before_save { self.name = name.downcase.gsub(/\b\w/, &:upcase) if name.present? }
@@ -18,6 +19,8 @@ class User < ApplicationRecord
     validates :password, length: { minimum: 6 }, allow_blank: true
 
     has_secure_password
+
+    enum role: [:member, :admin]
 
     def format_name
       if name 

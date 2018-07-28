@@ -70,7 +70,7 @@ class PostsController < ApplicationController
      post = Post.find(params[:id])
 
      # we redirect the user unless they own the post they're attempting to modify, or they're an admin
-     unless current_user == post.user || current_user.admin?
+     unless current_user == post.user || current_user.admin? || current_user.moderator?
        flash[:alert] = "You must be an admin to do that."
        redirect_to [post.topic, post]
      end

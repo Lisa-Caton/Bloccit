@@ -17,6 +17,7 @@ RSpec.describe Post, type: :model do
    # associate 'post' with 'topic' via 'topic.posts.create!'
    # associate user with post when we create the test post.
 
+  it { is_expected.to have_many(:comments) }
 
   it { is_expected.to belong_to(:topic) }
   it { is_expected.to belong_to(:user) }

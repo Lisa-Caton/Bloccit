@@ -5,6 +5,7 @@ include SessionsHelper
 RSpec.describe PostsController, type: :controller do
   let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
   let(:other_user) { User.create!(name: RandomData.random_name, email: RandomData.random_email, password: "helloworld", role: :member) }
+  let(:moderator) { User.create!(name: RandomData.random_name, email: RandomData.random_email, password: "helloworld", role: :moderator) }
   let (:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
 
@@ -372,7 +373,7 @@ RSpec.describe PostsController, type: :controller do
 
   context "moderator user doing CRUD on a post they don't own" do
     before do
-      create_session(my_user)
+      create_session(moderator)
     end
 
     describe "GET show" do
@@ -469,9 +470,15 @@ RSpec.describe PostsController, type: :controller do
     end
 
     describe "DELETE destroy" do
-      it "returns http redirect" do
+      it "deletes the post" do
         delete :destroy, params: { topic_id: my_topic.id, id: my_post.id }
-        expect(response).to redirect_to(my_topic)
+        count = Post.where({id: my_post.id}).size
+        expect(count).to eq 0
+      end
+
+      it "redirects to posts index" do
+        delete :destroy, params: { topic_id: my_topic.id, id: my_post.id }
+        expect(response).to redirect_to my_topic
       end
 
     end

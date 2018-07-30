@@ -14,19 +14,10 @@
      <h2>Posts</h2>
      <% @topic.posts.each do |post| %>
      <!--/ we iterate over the posts belonging to @topic, and display each post. -->
-       <div class="media">
-         <div class="media-body">
-           <h4 class="media-heading">
-             <%= link_to post.title, topic_post_path(@topic, post) %>
-             <!--/ we refactor how we link to individual posts using the 'topic_post_path method'. This helper takes a topic and a post and generates a path to the posts show view. -->
-           </h4>
-           <small>
-             submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
-             <%= post.comments.count %> Comments
-           </small>
-           <!--/ we add submission and comment details for each post in the show view. -->
-         </div>
-       </div>
+
+      <!-- refactored the loop and placed it in the partial: `_topic.html.erb' -->
+       <%= render partial: 'posts/post', locals: { post: post } %>
+
      <% end %>
     <h2>Sponsored Posts</h2>
     <% @topic.sponsored_posts.each do |sponsored_post| %>

@@ -15,6 +15,8 @@
      <% @topic.posts.each do |post| %>
      <!--/ we iterate over the posts belonging to @topic, and display each post. -->
 
+       <%= render partial: 'votes/voting', locals: { post: post } %>
+
       <!-- refactored the loop and placed it in the partial: `_topic.html.erb' -->
        <%= render partial: 'posts/post', locals: { post: post } %>
 

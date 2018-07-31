@@ -4,10 +4,13 @@ RSpec.describe User, type: :model do
 
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
 
+#Shoulda Tests:
+
    it { is_expected.to have_many(:posts) }
    # we'll need to associate the Post and User models
 
    it { is_expected.to have_many(:comments) }
+   it { is_expected.to have_many(:votes) }
 
     # Shoulda tests for name
     it { is_expected.to validate_presence_of(:name) }

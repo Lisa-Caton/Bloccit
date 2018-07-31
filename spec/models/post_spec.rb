@@ -69,24 +69,43 @@ RSpec.describe Post, type: :model do
       end
     end
 
+
+
     describe "#update_rank" do
-    # we expect that a post's rank will be determined by the following calculation:
-    it "calculates the correct rank" do
-      post.update_rank
-      expect(post.rank).to eq (post.points + (post.created_at - Time.new(1970,1,1)) / 1.day.seconds)
+      # we expect that a post's rank will be determined by the following calculation:
+      it "calculates the correct rank" do
+        post.update_rank
+        expect(post.rank).to eq (post.points + (post.created_at - Time.new(1970,1,1)) / 1.day.seconds)
+      end
+
+      it "updates the rank when an up vote is created" do
+        old_rank = post.rank
+        post.votes.create!(value: 1, user: user)
+        expect(post.rank).to eq (old_rank + 1)
+      end
+
+      it "updates the rank when a down vote is created" do
+        old_rank = post.rank
+        post.votes.create!(value: -1, user: user)
+        expect(post.rank).to eq (old_rank - 1)
+      end
+    end
+end # end the describe! 3, inside of one
+
+
+  describe "#create_vote" do
+    it "sets the post up_votes to 1" do
+      expect(post.up_votes).to eq(1)
     end
 
-    it "updates the rank when an up vote is created" do
-      old_rank = post.rank
-      post.votes.create!(value: 1, user: user)
-      expect(post.rank).to eq (old_rank + 1)
+    it "it calls #create_vote when a post is created" do
+      post = topic.posts.new(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+      expect(post).to receive(:create_vote)
+      post.save
     end
 
-    it "updates the rank when a down vote is created" do
-      old_rank = post.rank
-      post.votes.create!(value: -1, user: user)
-      expect(post.rank).to eq (old_rank - 1)
+    it "associates the vote with the owner of the post" do
+      expect(post.votes.first.user).to eq(post.user)
     end
   end
-  end # end the describe! 3, inside of one
 end

@@ -12,14 +12,15 @@ RSpec.describe Post, type: :model do
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
   # create a user to associate with a test post
 
-   let(:post) { topic.posts.create!(title: title, body: body, user: user) }
-   # associate 'post' with 'topic' via 'topic.posts.create!'
-   # associate user with post when we create the test post.
+  let(:post) { topic.posts.create!(title: title, body: body, user: user) }
+  # associate 'post' with 'topic' via 'topic.posts.create!'
+  # associate user with post when we create the test post.
 
 #Shoulda Tests:
 
   it { is_expected.to have_many(:comments) }
   it { is_expected.to have_many(:votes) }
+  it { is_expected.to have_many(:favorites) }
 
   it { is_expected.to belong_to(:topic) }
   it { is_expected.to belong_to(:user) }

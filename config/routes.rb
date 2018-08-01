@@ -13,9 +13,11 @@ Rails.application.routes.draw do
     # we only add create and destroy routes for comments.
     # we'll display comments on the posts show view, so we won't need index or new routes.
     # We also won't give users the ability to view individual comments or edit comments, removing the need for show, update, and edit routes.
+
+    resources :favorites, only: [:create, :destroy]
   
-  post '/up-vote' => 'votes#up_vote', as: :up_vote
-  post '/down-vote' => 'votes#down_vote', as: :down_vote
+    post '/up-vote' => 'votes#up_vote', as: :up_vote
+    post '/down-vote' => 'votes#down_vote', as: :down_vote
   end
 
   resources :users, only: [:new, :create]

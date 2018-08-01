@@ -25,4 +25,30 @@ RSpec.describe Comment, type: :model do
       expect(comment).to have_attributes(body: "Comment Body")
     end
   end
+
+
+  # Because we want to send an email every time a user comments on a favorited post, 
+  # let's add a callback to Comment.
+  describe "after_create" do
+     before do
+       @another_comment = Comment.new(body: 'Comment Body', post: post, user: user)
+       # we initialize (but don't save) a new comment for post
+     end
+ 
+     it "sends an email to users who have favorited the post" do
+       favorite = user.favorites.create(post: post)
+       expect(FavoriteMailer).to receive(:new_comment).with(user, post, @another_comment).and_return(double(deliver_now: true))
+       #we favorite post then expect FavoriteMailer will receive a call to  new_comment.
+
+       @another_comment.save!
+       # We then save @another_comment to trigger the after create callback.
+     end
+ 
+     it "does not send emails to users who haven't favorited the post" do
+       expect(FavoriteMailer).not_to receive(:new_comment)
+       # test that FavoriteMailer does not receive a call to new_comment when post isn't favorited.
+ 
+       @another_comment.save!
+     end
+   end
 end

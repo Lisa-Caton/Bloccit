@@ -59,4 +59,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.action_mailer.default_url_options = { host: 'localhost' }
+
+  # file will tell ActionMailer to raise informative errors if it fails. This can be very helpful for debugging.
+  config.raise_delivery_errors = true
 end

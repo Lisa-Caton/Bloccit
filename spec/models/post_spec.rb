@@ -6,6 +6,8 @@ RSpec.describe Post, type: :model do
 
   let(:title) { RandomData.random_sentence }
   let(:body) { RandomData.random_paragraph }
+
+
   let(:topic) { Topic.create!(name: name, description: description) }
   # we create a parent topic for 'post'
 
@@ -34,7 +36,7 @@ RSpec.describe Post, type: :model do
   it { is_expected.to validate_length_of(:title).is_at_least(5) }
   it { is_expected.to validate_length_of(:body).is_at_least(20) }
 
-  describe "attributes" do
+  context "attributes" do
     it "has a title, body, and user attribute" do
        expect(post).to have_attributes(title: title, body: body, user: user)
      end
@@ -49,7 +51,7 @@ RSpec.describe Post, type: :model do
       @down_votes = post.votes.where(value: -1).count
     end
 
-    # we test that 'up_votes' returns the count of up votes
+        # we test that 'up_votes' returns the count of up votes
     describe "#up_votes" do
       it "counts the number of votes with value = 1" do
        expect( post.up_votes ).to eq(@up_votes)
@@ -70,8 +72,6 @@ RSpec.describe Post, type: :model do
       end
     end
 
-
-
     describe "#update_rank" do
       # we expect that a post's rank will be determined by the following calculation:
       it "calculates the correct rank" do
@@ -91,8 +91,7 @@ RSpec.describe Post, type: :model do
         expect(post.rank).to eq (old_rank - 1)
       end
     end
-end # end the describe! 3, inside of one
-
+  end #ends the voting describe
 
   describe "#create_vote" do
     it "sets the post up_votes to 1" do
@@ -108,5 +107,6 @@ end # end the describe! 3, inside of one
     it "associates the vote with the owner of the post" do
       expect(post.votes.first.user).to eq(post.user)
     end
-  end
-end
+  end #ends #create_vote describe
+
+end #ends the rspec

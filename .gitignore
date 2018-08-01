@@ -30,4 +30,5 @@
 /config/master.key
 
 # Ignore application configuration
+# Ignore environment variables
 /config/application.yml

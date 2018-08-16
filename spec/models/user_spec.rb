@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
+  let(:user) { create(:user) }
 
 #Shoulda Tests:
 
@@ -31,7 +31,7 @@ RSpec.describe User, type: :model do
 
     describe "attributes" do
       it "should have name and email attributes" do
-        expect(user).to have_attributes(name: "Bloccit User", email: "user@bloccit.com")
+        expect(user).to have_attributes(name: user.name, email: user.email)
       end
 
       it "should have each first letter capitalized in the name" do
@@ -118,8 +118,8 @@ RSpec.describe User, type: :model do
 
 
   describe "invalid user" do
-    let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
-    let(:user_with_invalid_email) { User.new(name: "Bloccit User", email: "") }
+    let(:user_with_invalid_name) { build(:user, name: "") }
+    let(:user_with_invalid_email) { build(:user, email: "") }
 
     it "should be an invalid user due to blank name" do
       expect(user_with_invalid_name).to_not be_valid
@@ -147,6 +147,26 @@ RSpec.describe User, type: :model do
 
        # we expect that favorite_for will return the favorite we created in the line before.
        expect(user.favorite_for(@post)).to eq(favorite)
+     end
+   end
+
+   describe ".avatar_url" do
+    # We use . in describe ".avatar_url" because it is a class method and that is the RSpec convention.
+    # RSpec conventions like this make it much easier to troubleshoot tests.
+
+     let(:known_user) { create(:user, email: "blochead@bloc.io") }
+    # we build a user with FactoryBot. We pass email: "blochead@bloc.io" to  build, which overrides the email address that would be generated in the factory with "blochead@bloc.io".
+    # We are overriding the default email address with a known one so that we can test against a 
+    # specific string that we know Gravatar will return for the account "blochead@bloc.io".
+ 
+     it "returns the proper Gravatar url for a known email entity" do
+    # we set the expected string that Gravatar should return for "blochead@bloc.io".
+    # The s=48 query paramter specifies that we want the returned image to be 48x48 pixels.
+
+       expected_gravatar = "http://gravatar.com/avatar/bb6d1172212c180cfbdb7039129d7b03.png?s=48"
+
+       expect(known_user.avatar_url(48)).to eq(expected_gravatar)
+       # we expect known_user.avatar_url to return  http://gravatar.com/avatar/bb6d1172212c180cfbdb7039129d7b03.png?s=48.
      end
    end
 

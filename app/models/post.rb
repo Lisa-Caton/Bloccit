@@ -1,17 +1,26 @@
 class Post < ApplicationRecord
   belongs_to :topic
   belongs_to :user
+
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
-   # we add the votes association to Post.
-   # This relates the models and allows us to call post.votes.
-   # We also add dependent: ':destroy' to ensure that votes are destroyed when their parent post is deleted.
   has_many :favorites, dependent: :destroy
+  # We add the comments, votes and favorites association to Post
+  # This relates the models and allows us to call post.comments, post.votes, and post.favorites.
+  # We also add dependent: ':destroy' to ensure that comments are destroyed when their parent post is deleted.
+  # We also add dependent: ':destroy' to ensure that votes are destroyed when their parent post is deleted.
+  # We also add dependent: ':destroy' to ensure that favorites are destroyed when their parent post is deleted.
+  
 
   after_create :create_vote
   after_create :create_favorite
 
   default_scope { order('rank DESC') }
+  scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }
+  #  unauthenticated users should not be able to see the posts of that user which are associated with private topics.
+  # we've created a visible_to scope on Post that returns all the posts whose topics are visible to the given user.
+  # we use a lambda (->) to ensure that a user is present or signed in. If the user is present, we return all posts
+  # If not, we use the Active Record joins method to retrieve all posts which belong to a public topic.
 
   scope :ordered_by_title, -> { order('title DESC') }
   scope :ordered_by_reverse_created_at, -> { order('created_at ASC') }

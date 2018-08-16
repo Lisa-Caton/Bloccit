@@ -3,6 +3,12 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  # We add the posts, comments, votes and favorites association to User
+  # This relates the models and allows us to call user.posts, user.comments, user.votes and user.favorites
+  # We also add dependent: ':destroy' to ensure that posts are destroyed when their parent user is deleted.
+  # We also add dependent: ':destroy' to ensure that comments are destroyed when their parent user is deleted.
+  # We also add dependent: ':destroy' to ensure that votes are destroyed when their parent user is deleted.
+  # We also add dependent: ':destroy' to ensure that favorites are destroyed when their parent user is deleted.
 
   before_save { self.email = email.downcase if email.present? }
   before_save :format_name
@@ -37,6 +43,11 @@ class User < ApplicationRecord
 
     def favorite_for(post)
      favorites.where(post_id: post.id).first
+   end
+
+   def avatar_url(size)
+     gravatar_id = Digest::MD5::hexdigest(self.email).downcase
+     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
    end
 
 end

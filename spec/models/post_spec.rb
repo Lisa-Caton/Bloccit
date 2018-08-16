@@ -1,22 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
+
+  let(:topic) { create(:topic) }
+  let(:user) { create(:user) }
+  let(:post) { create(:post) }
+  # These use a Factory for each topic, user, and post!
+
   let(:name) { RandomData.random_sentence }
   let(:description) { RandomData.random_paragraph }
 
   let(:title) { RandomData.random_sentence }
   let(:body) { RandomData.random_paragraph }
 
-
-  let(:topic) { Topic.create!(name: name, description: description) }
-  # we create a parent topic for 'post'
-
-  let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
-  # create a user to associate with a test post
-
-  let(:post) { topic.posts.create!(title: title, body: body, user: user) }
-  # associate 'post' with 'topic' via 'topic.posts.create!'
-  # associate user with post when we create the test post.
 
 #Shoulda Tests:
 
@@ -26,7 +22,7 @@ RSpec.describe Post, type: :model do
 
   it { is_expected.to belong_to(:topic) }
   it { is_expected.to belong_to(:user) }
-  # we'll need to associate the Post and User models
+  # test that a post belongs to a topic and user
 
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:body) }
@@ -38,7 +34,7 @@ RSpec.describe Post, type: :model do
 
   context "attributes" do
     it "has a title, body, and user attribute" do
-       expect(post).to have_attributes(title: title, body: body, user: user)
+       expect(post).to have_attributes(title: post.title, body: post.body, user: post.user)
      end
   end
 

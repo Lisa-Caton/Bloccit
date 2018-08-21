@@ -22,10 +22,35 @@
      </div>
    </div>
  </div>
- 
-<!-- We display all of the users post's and comment's using partial -->
+
  <h2>Posts</h2>
- <%= render @user.posts %>
- 
- <h2>Comments</h2>
- <%= render @user.comments %>
+<% if @user.has_posts? %>
+  <%= render @user.posts %>
+  <!-- We display all of the users post's using partial -->
+<% else %>
+  <div class="media">
+    <%= link_to current_user.name, user_path(current_user) %> has not submitted any posts yet.
+  </div>
+<% end %>
+
+<h2>Comments</h2>
+<% if @user.has_comments? %>
+  <%= render @user.comments %>
+  <!-- We display all of the users comment's using partial -->
+<% else %>
+  <div class="media">
+    <%= link_to current_user.name, user_path(current_user) %> has not submitted any comments yet.
+  </div>
+<% end %>
+
+<h2>Favorites</h2>
+<% if @user.has_favorites? %>
+<!-- We display all of the users favorite's using partial -->
+    <% @user.favorites.each do |favorite| %>
+      <%= render partial: 'users/favorite', locals: { post: favorite.post } %>
+    <% end %>
+<% else %>
+    <div class="media">
+      <%= link_to current_user.name, user_path(current_user) %> has not favorited any posts yet.
+    </div>
+<% end %>

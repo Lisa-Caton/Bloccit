@@ -4,7 +4,7 @@ class FavoriteMailer < ApplicationMailer
   def new_comment(user, post, comment)
  
      # we set three different headers to enable conversation threading in different email clients.
-     headers["Message-ID"] = "<comments/#{comment.id}@yBloccit.example>"
+     headers["Message-ID"] = "<comments/#{comment.id}@Bloccit.example>"
      headers["In-Reply-To"] = "<post/#{post.id}@Bloccit.example>"
      headers["References"] = "<post/#{post.id}@Bloccit.example>"
  
@@ -17,7 +17,7 @@ class FavoriteMailer < ApplicationMailer
    end
 
    def new_post(post)
-     headers["Message-ID"] = "<posts/#{post.id}@yBloccit.example>"
+     headers["Message-ID"] = "<posts/#{post.id}@Bloccit.example>"
      headers["In-Reply-To"] = "<post/#{post.id}@Bloccit.example>"
      headers["References"] = "<post/#{post.id}@Bloccit.example>"
 

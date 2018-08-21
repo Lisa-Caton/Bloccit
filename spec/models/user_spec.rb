@@ -135,12 +135,12 @@ RSpec.describe User, type: :model do
        topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
        @post = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
      end
- 
+
      it "returns `nil` if the user has not favorited the post" do
        # we expect that favorite_for will return nil if the user has not favorited  @post.
        expect(user.favorite_for(@post)).to be_nil
      end
- 
+
      it "returns the appropriate favorite if it exists" do
        # we create a favorite for user and @post.
        favorite = user.favorites.where(post: @post).create
@@ -156,9 +156,9 @@ RSpec.describe User, type: :model do
 
      let(:known_user) { create(:user, email: "blochead@bloc.io") }
     # we build a user with FactoryBot. We pass email: "blochead@bloc.io" to  build, which overrides the email address that would be generated in the factory with "blochead@bloc.io".
-    # We are overriding the default email address with a known one so that we can test against a 
+    # We are overriding the default email address with a known one so that we can test against a
     # specific string that we know Gravatar will return for the account "blochead@bloc.io".
- 
+
      it "returns the proper Gravatar url for a known email entity" do
     # we set the expected string that Gravatar should return for "blochead@bloc.io".
     # The s=48 query paramter specifies that we want the returned image to be 48x48 pixels.
@@ -169,6 +169,41 @@ RSpec.describe User, type: :model do
        # we expect known_user.avatar_url to return  http://gravatar.com/avatar/bb6d1172212c180cfbdb7039129d7b03.png?s=48.
      end
    end
+
+   describe "#has_posts" do
+    it "returns false if the user doesn't have associated posts" do
+      expect(user.has_posts?).to eq false
+    end
+
+    it "returns true if the user has associated posts" do
+      user.posts << build(:post, user: user)
+      expect(user.has_posts?).to eq true
+    end
+  end
+
+  describe "#has_comments" do
+    it "returns false if the user doesn't have associated comments" do
+      expect(user.has_comments?).to eq false
+    end
+
+    it "returns true if the user has associated comments" do
+      user.posts << build(:post, user: user)
+      user.posts.first.comments << build(:comment, user: user)
+      expect(user.has_comments?).to eq true
+    end
+  end
+
+  describe "#has_favorites" do
+    it "returns false if the user doesn't have associated favorites" do
+      expect(user.has_favorites?).to eq false
+    end
+
+    it "returns true if the user has associated favorites" do
+      post = build(:post, user: user)
+      user.favorites << Favorite.create!(post: post)
+      expect(user.has_favorites?).to eq true
+    end
+  end
 
 
 end

@@ -18,11 +18,11 @@ class User < ApplicationRecord
   # before_save { self.name = name.downcase.gsub(/\b\w/, &:upcase) if name.present? }
 
     validates :name, length: { minimum: 1, maximum: 100 }, presence: true
-    
+
     validates :email,
-             presence: true,
-             uniqueness: { case_sensitive: false },
-             length: { minimum: 3, maximum: 254 }
+              presence: true,
+              uniqueness: { case_sensitive: false },
+              length: { minimum: 3, maximum: 254 }
 
     validates :password, presence: true, length: { minimum: 6 }, if: -> { "password_digest.nil?" }
     validates :password, length: { minimum: 6 }, allow_blank: true
@@ -32,7 +32,7 @@ class User < ApplicationRecord
     enum role: [:member, :admin, :moderator]
 
     def format_name
-      if name 
+      if name
         name_array = []
         name.split.each do |name_part|
           name_array << name_part.capitalize
@@ -43,11 +43,23 @@ class User < ApplicationRecord
 
     def favorite_for(post)
      favorites.where(post_id: post.id).first
-   end
+    end
 
-   def avatar_url(size)
-     gravatar_id = Digest::MD5::hexdigest(self.email).downcase
-     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
-   end
+    def avatar_url(size)
+       gravatar_id = Digest::MD5::hexdigest(self.email).downcase
+       "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
+    end
+
+    def has_posts?
+      posts.count > 0
+    end
+
+    def has_comments?
+      comments.count > 0
+    end
+
+    def has_favorites?
+      favorites.count > 0
+    end
 
 end

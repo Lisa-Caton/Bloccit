@@ -10,8 +10,7 @@ RSpec.describe Favorite, type: :model do
   let(:favorite) { Favorite.create!(post: post, user: user) }
   # favorite creates an associated to post, and user
 
-# Shoulda Tests
-
+  # Shoulda Tests
   it { is_expected.to belong_to(:post) }
   it { is_expected.to belong_to(:user) }
   # test that a favorite belongs to a post and user

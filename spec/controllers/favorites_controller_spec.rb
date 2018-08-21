@@ -3,8 +3,8 @@ include SessionsHelper
 
 RSpec.describe FavoritesController, type: :controller do 
 
-  let(:my_user) { create(:user) }
   let(:my_topic) { create(:topic) }
+  let(:my_user) { create(:user) }
   let(:my_post) { create(:post, topic: my_topic, user: my_user) }
 
    context 'guest user' do

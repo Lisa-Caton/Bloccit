@@ -1,3 +1,11 @@
-## Bloccit: a Reddit replica to teach the fundamentals of web development and Rails.
+## Bloccit
+##### a Reddit replica to teach the fundamentals of web development and Rails.
 
-Made at [Bloc](http://bloc.io).
+## Objectives
+
+*Understand the user stories and acceptance criteria for this project.
+
+*Explain MVC.
+
+*Discuss the principle of separation of concerns.
+

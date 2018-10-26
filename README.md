@@ -1,5 +1,5 @@
 ## Bloccit
-##### a Reddit replica to teach the fundamentals of web development and Rails.
+##### A Reddit replica to teach the fundamentals of web development and Rails.
 
 ## Objectives
 

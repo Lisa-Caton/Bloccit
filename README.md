@@ -3,9 +3,9 @@
 
 ## Objectives
 
-*Understand the user stories and acceptance criteria for this project.
+* Understand the user stories and acceptance criteria for this project.
 
-*Explain MVC.
+* Explain MVC.
 
-*Discuss the principle of separation of concerns.
+* Discuss the principle of separation of concerns.
 
